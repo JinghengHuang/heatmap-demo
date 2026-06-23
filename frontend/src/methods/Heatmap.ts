@@ -118,7 +118,7 @@ class Heatmap{
      * @param heights height array for getting min and max height
      * @returns 
      */
-    customGridHeatmapGeometry(south: number, north: number, east: number, west: number, height: number, heatmapData: FeatureCollection, heatmapField: string, heights: number[], size?: Array<number> | undefined, bufferPercentage?: number | undefined, intensity: number = 50) {
+    customGridHeatmapGeometry(south: number, north: number, east: number, west: number, height: number, heatmapData: FeatureCollection, heatmapField: string, heights: number[], size?: Array<number> | undefined, bufferPercentage?: number | undefined, intensity: number = 50, minHeight: number = Infinity, maxHeight: number = -Infinity) {
         if (!size) {
             size = [50, 50]
         }
@@ -167,6 +167,12 @@ class Heatmap{
                 const vertexHeight = height + this.interpolateHeightKNearest(lon, lat, samplePoints, 8, 2, intensity)
                 const cart = Cartesian3.fromDegrees(lon, lat, vertexHeight);
                 heights.push(vertexHeight)
+                if(vertexHeight > maxHeight){
+                    maxHeight = vertexHeight
+                }
+                if(vertexHeight < minHeight){
+                    minHeight = vertexHeight
+                }
                 positions.push(cart.x, cart.y, cart.z);
 
                 // Approximate outward normal from ellipsoid center
@@ -234,7 +240,7 @@ class Heatmap{
             
         });
 
-        return geometry
+        return [geometry, minHeight, maxHeight]
     }
 
     heatmapRender(viewerRef: RefObject<Viewer | null>, heatmapParameters: HeatmapProps, flyTo: RefObject<boolean>) {
@@ -255,7 +261,16 @@ class Heatmap{
                             
                             const heights:number[] = [];
                             const size = [512, 512];
-                            const geom = this.customGridHeatmapGeometry(bbox[1], bbox[3], bbox[0], bbox[2], heatmapParameters.baseHeight, data, "value", heights, size, 50, heatmapParameters.intensity)
+                            let maxHeight = -Infinity
+                            let minHeight = Infinity
+                            const geomCompute = this.customGridHeatmapGeometry(bbox[1], bbox[3], bbox[0], bbox[2], heatmapParameters.baseHeight, data, "value", heights, size, 50, heatmapParameters.intensity, minHeight, maxHeight)
+                            const geom = geomCompute[0];
+                            if(typeof geomCompute[1] === 'number'){
+                                minHeight = geomCompute[1];
+                            }
+                            if(typeof geomCompute[2] === 'number'){
+                                maxHeight = geomCompute[2];
+                            }
                             const ramp = this.createColorRampCanvas(heatmapParameters.colors)
                             const instance = new GeometryInstance({
                                 geometry: geom
@@ -264,8 +279,8 @@ class Heatmap{
                                 type: "heatmap",
                                 uniforms: {
                                     u_ramp: ramp,
-                                    u_minHeight: Math.min(...heights),
-                                    u_maxHeight: Math.max(...heights),
+                                    u_minHeight: minHeight,
+                                    u_maxHeight: maxHeight,
                                     u_alpha: heatmapParameters.alpha
                                 },
                                 source: frag
