@@ -64,6 +64,7 @@ cd backend && uvicorn main:app --reload
 # Frontend only
 cd frontend && npm install && npm run dev
 ```
+---
 ## Highlights
 
 - Cesium scene rendering
