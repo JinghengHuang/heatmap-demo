@@ -4,6 +4,8 @@ A full-stack geospatial visualization platform featuring animated 3D heatmaps on
 
 Built as a public portfolio demonstration of the techniques behind patent [CN116485982A](https://patents.google.com/patent/CN116485982A) — 3D heatmap generation under the CesiumJS framework.
 
+Visit https://jhhuangtechspace233.cc/ to check it out.
+
 ---
 
 ## What it does
