@@ -292,8 +292,8 @@ class Heatmap{
                                 })
                             }else{
                                 this.material.uniforms.u_ramp = ramp;
-                                this.material.uniforms.u_minHeight = Math.min(...heights);
-                                this.material.uniforms.u_maxHeight = Math.max(...heights);
+                                this.material.uniforms.u_minHeight = minHeight;
+                                this.material.uniforms.u_maxHeight = maxHeight;
                                 this.material.uniforms.u_alpha = heatmapParameters.alpha;
                             }
                             const appearance = new MaterialAppearance({
