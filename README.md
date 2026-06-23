@@ -64,6 +64,15 @@ cd backend && uvicorn main:app --reload
 # Frontend only
 cd frontend && npm install && npm run dev
 ```
+## Highlights
+
+- Cesium scene rendering
+- Custom WebGL/GLSL shader logic
+- Heatmap parameter configuration
+- GeoJSON dataset parsing and loading
+- FastAPI backend
+- Dockerized frontend/backend/nginx deployment
+- Cloudflare CDN + HTTPS setup
 
 ---
 
