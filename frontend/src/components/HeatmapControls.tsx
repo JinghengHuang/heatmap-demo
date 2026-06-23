@@ -37,10 +37,7 @@ export default function HeatmapControls({
       <label style={{ marginTop: '1rem', display: 'block' }}>
         Intensity: {intensity.toFixed(1)}
         <input
-          type="range"
-          min={0}
-          max={100}
-          step={1}
+          type="number"
           value={intensity}
           onChange={e => onIntensityChange(Number(e.target.value))}
           style={{ display: 'block', width: '100%' }}
