@@ -2,7 +2,7 @@
 
 A full-stack geospatial visualization platform featuring animated 3D heatmaps on a Cesium globe, backed by a FastAPI data service and a React/TypeScript frontend.
 
-Built as a public portfolio demonstration of the techniques behind patent [CN116485982A](https://patents.google.com/patent/CN116485982A) — 3D heatmap generation under the CesiumJS framework.
+Built as a public portfolio demonstration of the techniques behind patent [CN116485982A](https://patents.google.com/patent/CN116485982A) — 3D heatmap generation under the CesiumJS framework. This is not the original code and it's re-implemented from scratch and only used the original patent document as reference.
 
 Visit https://jhhuangtechspace233.cc/ to check it out.
 
